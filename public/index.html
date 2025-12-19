@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LAN File Share</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <div class="container">
+        <!-- Settings Toolbar -->
+        <div class="settings-toolbar">
+            <select id="language-select" class="settings-select">
+                <option value="en">English</option>
+                <option value="zh">中文</option>
+            </select>
+            <div class="theme-toggle">
+                <button class="theme-btn active" data-theme="auto" title="Follow System">🖥️</button>
+                <button class="theme-btn" data-theme="light" title="Light Mode">🌞</button>
+                <button class="theme-btn" data-theme="dark" title="Dark Mode">🌙</button>
+            </div>
+        </div>
+
+        <header>
+            <h1>AirDrop<span class="highlight">Anywhere</span></h1>
+            <p data-i18n="tagline">Seamless LAN File Transfer</p>
+        </header>
+
+        <section class="upload-zone" id="drop-zone">
+            <div class="icon-container">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 16V4M12 4L8 8M12 4L16 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M20 20H4" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </div>
+            <h2 data-i18n="drag_drop">Drag & Drop files here</h2>
+            <p data-i18n="or_browse">or click to browse</p>
+            <input type="file" id="file-input" multiple hidden>
+
+            <div id="progress-container" class="hidden">
+                <div class="progress-bar-wrapper">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+                <span id="progress-text">0%</span>
+            </div>
+        </section>
+
+        <!-- Breadcrumbs & Actions -->
+        <div class="toolbar">
+            <div class="breadcrumbs" id="breadcrumbs">
+                <!-- Javascript will populate -->
+                <span class="crumb" data-path="">Home</span>
+            </div>
+            <button id="create-folder-btn" class="secondary-btn" title="New Folder">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                    <line x1="12" y1="11" x2="12" y2="17"></line>
+                    <line x1="9" y1="14" x2="15" y2="14"></line>
+                </svg>
+            </button>
+        </div>
+
+        <section class="file-list-section">
+            <div class="section-header">
+                <h3 data-i18n="shared_files">Shared Files</h3>
+                <button id="refresh-btn" class="icon-btn" title="Refresh">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M23 4v6h-6M1 20v-6h6" />
+                        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+                    </svg>
+                </button>
+            </div>
+            <ul id="file-list" class="file-list">
+                <!-- Javascript will populate this -->
+            </ul>
+        </section>
+    </div>
+
+    <!-- Modals -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <div id="conflict-modal" class="modal hidden">
+        <div class="modal-content conflict-content">
+            <div class="modal-header">
+                <h3 data-i18n="modal_conflict_title">File Conflict</h3>
+            </div>
+            <div class="modal-body">
+                <p data-i18n="modal_conflict_desc">Some files already exist. What would you like to do?</p>
+                <ul id="conflict-list"></ul>
+            </div>
+            <div class="modal-footer">
+                <button id="conflict-rename-btn" class="secondary-btn" data-i18n="btn_keep_both">Keep Both
+                    (Rename)</button>
+                <button id="conflict-overwrite-btn" class="primary-btn" data-i18n="btn_overwrite">Overwrite</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="preview-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="preview-title" data-i18n="modal_preview_title">Preview</h3>
+                <div class="modal-actions">
+                    <button id="copy-content-btn" class="secondary-btn hidden" title="Copy Content">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        <span data-i18n="btn_copy">Copy</span>
+                    </button>
+                    <button class="close-btn">&times;</button>
+                </div>
+            </div>
+            <div class="modal-body" id="preview-body">
+                <!-- Content here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
